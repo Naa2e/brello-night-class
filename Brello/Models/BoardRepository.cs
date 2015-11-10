@@ -9,6 +9,9 @@ namespace Brello.Models
     public class BoardRepository
     {
         private BoardContext context;
+
+        public int GetListCount { get; set; }
+
         public BoardRepository(BoardContext _context) {
             context = _context;
         }
@@ -21,7 +24,21 @@ namespace Brello.Models
 
         public List<BrelloList> GetAllLists()
         {
-            return null;
+            var query = from l in context.Boards select l;
+
+        /* trying to make the SelectMany example work
+            Board[] petOwners =
+                { new Board { Title="Higa, Sidney",
+                          Lists = new List<BrelloList>()},
+                      new Board { Title="Ashkenazi, Ronen",
+                          Lists = new List<BrelloList>()},
+                      new Board { Title="Price, Vernette",
+                          Lists = new List<BrelloList>()};
+
+            // Query using SelectMany().
+            IEnumerable<BrelloList> query1 = petOwners.SelectMany(petOwner => petOwner.Lists);
+            */
+            return query.SelectMany(board => board.Lists).ToList();
         }
 
         // This is an example of overloading a method
@@ -57,6 +74,11 @@ namespace Brello.Models
         {
             var query = from b in context.Boards where b.Owner == user1 select b;
             return query.ToList<Board>(); // Same as query.ToList();
+        }
+
+        public int GetListCount()
+        {
+            return GetAllLists().Count;
         }
     }
 }
