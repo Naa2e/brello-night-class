@@ -12,6 +12,12 @@ namespace Brello.Models
         public int BrelloListId { get; set; }
         public string Title { get; set; }
         public List<Card> Cards { get; set; }
+
+        //Required Annotation wll ensure Entity returns a usefull
+        //validation message if CreateAt is null.
+        [Required]
         public DateTime CreatedAt { get; set; }
+
+        public virtual Board Board { get; set; }
     }
 }
