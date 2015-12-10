@@ -16,7 +16,7 @@ namespace Brello.Models
         public virtual List<BrelloList> Lists { get; set; }
         public virtual List<ApplicationUser> Followers { get; set; }
 
-        public Board() {
+        public Board() { // new instance
             Lists = new List<BrelloList>();
             Followers = new List<ApplicationUser>();
         }
